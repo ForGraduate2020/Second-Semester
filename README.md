@@ -8,5 +8,6 @@ Main : **Music Helper**
  ### SubIdea
 Sub : **차량 인원 조사**
 
-#### 2주차 발표 
+발표자료
+---------
 [발표내용]https://github.com/ForGraduate2020/Second-Semester/blob/master/%EC%BA%A1%EC%8A%A4%ED%86%A4%20%EB%94%94%EC%9E%90%EC%9D%B8%202%EC%A3%BC%EC%B0%A8.pptx
