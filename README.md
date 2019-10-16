@@ -9,6 +9,9 @@ Main : **Music Helper**
 Sub : **차량 인원 조사**
 
 
+
+발표자료
+--------
 <details>
 <summary>발표자료</summary>
 
@@ -17,6 +20,6 @@ Sub : **차량 인원 조사**
  * 19.09.25: [19.09.25](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EC%BA%A1%EC%8A%A4%ED%86%A4%20%EB%94%94%EC%9E%90%EC%9D%B8%203%EC%A3%BC%EC%B0%A8.pptx)
  * 19.10.02 : [19.10.02](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EC%BA%A1%EC%8A%A4%ED%86%A4%20%EB%94%94%EC%9E%90%EC%9D%B8%204%EC%A3%BC%EC%B0%A8.pptx)
  * 19.10.16 : [19.10.16](https://github.com/ForGraduate2020/Second-Semester/blob/master/캡스톤%20디자인%205주차.pptx)
-  * 시나리오: [시나리오](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EC%BA%A1%EB%94%94%2010%EC%9B%94%203%EC%A3%BC%EC%B0%A8%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.hwp)
+   * ->시나리오: [시나리오](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EC%BA%A1%EB%94%94%2010%EC%9B%94%203%EC%A3%BC%EC%B0%A8%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.hwp)
 
 </details>
