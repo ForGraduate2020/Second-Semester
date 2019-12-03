@@ -22,14 +22,3 @@ Main : **My Little Observer**
 * [\[191127\]GUI&Usecase](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191127%5DGUI_Usecase.pptx)
 
 </details>
-  
-  
-## 외부문서
-<details>
-<summary>외부문서</summary>
-
-* [기획문서](https://docs.google.com/document/d/1mulyWIMIPQo7KsqK55tJm8bVwl9ofQJz7S5DYN1hALU/edit?usp=sharing)
-* [usecase](https://docs.google.com/spreadsheets/d/1uokqMZt9xmxQC-KocSnWKCCkFHypPUd9GRh9RBW50sc/edit?usp=sharing)
-* [testcase](https://docs.google.com/spreadsheets/d/1-S5phEqsQwc12mwPuieU-YR3NkfNd-QL6AogXjtDbTQ/edit?usp=sharing)
-
-</details>
