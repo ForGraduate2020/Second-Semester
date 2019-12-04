@@ -7,15 +7,19 @@
 Main : **My Little Observer**
   
   
- ## 최종결과물
+## 최종결과물
 <details>
-<summary>최종 결과물</summary>
-* [\[1\] Use Case]
-* [\[2\] Test Case]
-* [\[3\] GUI]
-* [\[4\] 기타(File Format, DB schema]
-* [\[5\] HW 사양]
-</details> 
+<summary>최종결과물</summary>
+
+* [\[1\] Use Case]()
+* [\[2\] Test Case]()
+* [\[3\] GUI]()
+* [\[4\] HW사양]()
+* [\[5\] 기타]()
+
+
+</details>
+
   
 ## 발표자료
 <details>
