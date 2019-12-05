@@ -11,8 +11,8 @@ Main : **My Little Observer**
 <details>
 <summary>최종결과물</summary>
 
-* [\[1\] Use Case]()
-* [\[2\] Test Case]()
+* [\[1\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/usecase.xlsx)
+* [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/testcase.xlsx)
 * [\[3\] GUI]()
 * [\[4\] HW사양]()
 * [\[5\] 기타]()
@@ -34,6 +34,7 @@ Main : **My Little Observer**
 * [\[191113\]아이디어 확정](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191113%5D아이디어%20확정.pptx)
 * [\[191120\]하드웨어 요구사항](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191120%5D하드웨어_요구사항.pptx)
 * [\[191127\]GUI&Usecase](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191127%5DGUI_Usecase.pptx)
+ * [\191203\]설계 사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191204%5D설계%20사양.pptx)
 
 </details>
 
