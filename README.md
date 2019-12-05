@@ -15,7 +15,7 @@ Main : **My Little Observer**
 * [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/testcase.xlsx)
 * [\[3\] GUI]()
 * [\[4\] HW사양]()
-* [\[5\] 기타]()
+* [\[5\] 기타](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
 
 
 </details>
