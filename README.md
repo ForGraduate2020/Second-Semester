@@ -30,10 +30,12 @@ Main : **My Little Observer**
   
 </deatils>
   
+  
 ## 발표자료
 <details>
 <summary>발표자료</summary>
-
+​    
+  
 * [\[190911\]브레인스토밍](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B190911%5D브레인스토밍.pptx)
 * [\[190918\]아이디어 취합](https://github.com/ForGraduate2020/Second-Semester/raw/master/발표자료/%5B190918%5D아이디어%20취합.pptx)
 * [\[190925\]아이디어 확정](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B190925%5D아이디어%20확정.pptx)
