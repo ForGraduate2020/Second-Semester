@@ -16,7 +16,9 @@ Main : **My Little Observer**
 * [\[3\] GUI](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B7%B8%EB%9E%98%ED%94%BD/GUI.docx)
 * [\[4\] HW사양](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
 * [\[5\] 기타(데이터베이스, 구매요구서 등)](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
-
+<summary>최종문서[과사 제출용]</summary>
+* [\[1\] 기획문서]()
+* [\[2\] 최종문서]()
 
 </details>
 
