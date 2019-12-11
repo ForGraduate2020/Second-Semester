@@ -10,19 +10,25 @@ Main : **My Little Observer**
 ## 최종결과물
 <details>
 <summary>최종결과물</summary>
-
+​    
+  
 * [\[1\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/usecase.xlsx)
 * [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/testcase.xlsx)
 * [\[3\] GUI](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B7%B8%EB%9E%98%ED%94%BD/GUI.docx)
 * [\[4\] HW사양](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
 * [\[5\] 기타(데이터베이스, 구매요구서 등)](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
 
-<summary>최종문서[과사 제출용]</summary>
-* [\[1\] 기획문서]()
-* [\[2\] 최종문서]()
 
 </details>
 
+<details>
+<summary>최종문서[과세제출용]</summary>
+  ​    
+  
+* [\[1\] 기획문서]()
+* [\[2\] 최종문서]()
+  
+</deatils>
   
 ## 발표자료
 <details>
