@@ -25,7 +25,7 @@ Main : **My Little Observer**
 ​    
   
 * [\[1\] 기획문서]()
-* [\[2\] 최종문서]()
+* [\[2\] 최종문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EC%B5%9C%EC%A2%85%EB%AC%B8%EC%84%9C%20(1).docx)
 </deatils>
 
   
