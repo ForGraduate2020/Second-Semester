@@ -22,7 +22,7 @@ Main : **My Little Observer**
 
 <details>
 <summary>최종문서[과사 제출용]</summary>
-  ​    
+​    
   
 * [\[1\] 기획문서]()
 * [\[2\] 최종문서]()
