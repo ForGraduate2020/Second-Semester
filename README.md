@@ -24,7 +24,7 @@ Main : **My Little Observer**
 <summary>최종문서[과사 제출용]</summary>
 ​    
   
-* [\[1\] 기획문서]()
+* [\[1\] 기획문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C.docx)
 * [\[2\] 최종문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EC%B5%9C%EC%A2%85%EB%AC%B8%EC%84%9C%20(1).docx)
 </deatils>
 
