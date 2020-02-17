@@ -1,7 +1,7 @@
 #include <EtherCard.h>
  
 //0은 DHCP, 1은 Static으로 설정
-#define STATIC 1  // set to 1 to disable DHCP (adjust myip/gwip values below)
+#define STATIC 0  // set to 1 to disable DHCP (adjust myip/gwip values below)
  
 //Static IP 일 경우 설정
 #if STATIC

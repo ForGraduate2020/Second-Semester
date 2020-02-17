@@ -2,7 +2,7 @@
 #include <SoftwareSerial.h>
 
 //0은 DHCP, 1은 Static으로 설정
-#define STATIC 1  // set to 1 to disable DHCP (adjust myip/gwip values below)
+#define STATIC 0  // set to 1 to disable DHCP (adjust myip/gwip values below)
 #define BTSerial Serial3 // SoftwareSerial(RX, TX)
 
 //Static IP 일 경우 설정
@@ -17,7 +17,7 @@ static byte gwip[] = { 10,80,78,254 };
 byte buffer[1024];    // 데이터 수신 버퍼
 int bufferPosition;   // 버퍼에 기록할 위치
 byte data;
-
+boolean flag=false;
 // ethernet mac address - must be unique on your network
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
  
@@ -65,12 +65,27 @@ void setup(){
 }
  
 void loop(){
+  if(flag)
+  if (ether.packetLoop(ether.packetReceive())) {
+    Serial.println("flag is true");
+    memcpy_P(ether.tcpOffset(), page, sizeof page);
+    ether.httpServerReply(sizeof page - 1);
+        }
+ // flag=false;
   //웹브라우저의 요청이 들어왔을 경우 page 의 내용을 보내줌
   // wait for an incoming TCP packet, but ignore its contents
  if (BTSerial.available()){      // 블루투스로 데이터 수신
     data= BTSerial.read();
-    
+    if(data=='a'){ //a입력시 웹사이트 실행
+      Serial.println("open website...");
+      flag=true;
+    }
+    else if(data =='b'){ //b입력시 웹사이트 종료
+      Serial.println("close website...");
+      flag=false;
+    }
     Serial.write(data);       // 수신된 데이터 시리얼 모니터로 출력
+    Serial.println();
     buffer[bufferPosition++] = data;
     if(data == '\n'){     // 문자열 종료 표시를 
       buffer[bufferPosition] = '\0';
@@ -83,14 +98,8 @@ void loop(){
       BTSerial.write(buffer, bufferPosition);
  
       bufferPosition = 0;
-    }
-    if(data == '1'){
-  if (ether.packetLoop(ether.packetReceive())) {
-    memcpy_P(ether.tcpOffset(), page, sizeof page);
-    ether.httpServerReply(sizeof page - 1);
-  }  
-    }
-    }
+    }      
+    }  
   }
   
   
