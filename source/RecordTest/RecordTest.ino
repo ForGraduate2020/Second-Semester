@@ -1,8 +1,11 @@
 #include <SPI.h>
 #include <SD.h>
 
+#define BUFSIZE 1024
+
 unsigned long timer = 0;
 unsigned long globalTimer = 0;
+unsigned long initialTime = 0;
 const int micPin = 0;
 const int bufferSize = 441;
 unsigned long avgRate = 0;
@@ -88,7 +91,6 @@ void setup()
 {
   // Open serial communications and wait for port to open:
 
-  //analogReadResolution(8);
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -117,6 +119,7 @@ void setup()
   {
     WriteHeader();
     Serial.println("Record start...");
+    initialTime = millis();
   }
   else
   {
@@ -126,22 +129,20 @@ void setup()
 
 void loop()
 {
-  unsigned long currentTime = millis();
+  unsigned long oldMilli = millis();
   unsigned long oldMicro = micros();
-  byte sampleBuffer[10240];
+  byte sampleBuffer[BUFSIZE];
 
   int sampleIndex = 0;
   int rate = 0;
 
+  timer = millis();
+
   if (myFile)
   {
-    while (1)
+    while (millis() - timer < 1000)
     {
-      currentTime = millis();
-
-      sampleIndex = 0;
-
-      if (micros() - oldMicro > 0) // sample every 125us
+      if (micros() - oldMicro > 0) // sample every x us
       {
         oldMicro = micros();
         sampleBuffer[sampleIndex] = analogRead(micPin) >> 2;
@@ -149,60 +150,43 @@ void loop()
         rate++;
       }
 
-      if (sampleIndex >= 10240) // buffer full
+      if (sampleIndex >= BUFSIZE) // buffer full
       {
         Serial.print("write buffer(buffer full) ");
         Serial.print(sampleIndex);
         Serial.println("byte");
         myFile.write(sampleBuffer, sampleIndex);
         sampleIndex = 0;
-        
-        continue;
-      }
-
-      /*
-      if (rate >= 8000)
-      {
-        //Serial.print("write buffer ");
-        //Serial.print(sampleIndex);
-        //Serial.println("byte");
-        myFile.write(sampleBuffer, sampleIndex);
-        rate = 0;
-        break;
-      }
-      */
-
-      // every sec
-      if (currentTime - timer > 1000)
-      {
-        // save rate
-        Serial.print("write buffer(1sec) ");
-        Serial.print(sampleIndex);
-        Serial.println("byte");
-        myFile.write(sampleBuffer, sampleIndex);
-        if (avgRate == 0)
-        {
-           avgRate = rate;
-        }
-        else
-        {
-          avgRate = (avgRate + rate) / 2;
-        }
-        timer = currentTime;
-        rate = 0;
-        break;
       }
     }
 
-    // log time
-    //Serial.print("8000 sample record... timer : ");
-    //Serial.println(currentTime);
+    // update timer
+    timer = millis();
+
+    // write remaining buffer
+    if (sampleIndex > 0)
+    {
+      Serial.print("write buffer(remains) ");
+      Serial.print(sampleIndex);
+      Serial.println("byte");
+      myFile.write(sampleBuffer, sampleIndex);
+    }
+
+    // get average rate
+    if (avgRate > 0)
+    {
+      avgRate = (avgRate + rate) / 2;
+    }
+    else
+    {
+      avgRate = rate;
+    }
 
     // log rate
     Serial.print(avgRate);
     Serial.println(" rate record...");
 
-    if (currentTime - globalTimer > 10000)
+    if (millis() - initialTime > 10000) // 10sec record
     {
       Finalize();
       Serial.println("Record finished...");
