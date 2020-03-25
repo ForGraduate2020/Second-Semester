@@ -9,6 +9,8 @@ const int delayMsec = 60;
 const int criticalBPM = 65;
 const int criticalDecibel = 500;
 
+unsigned long timer = 0;
+
 bool HeartbeatDetected(int IRSensorPin, int delayTime)
 {
   static int maxValue = 0;
@@ -63,6 +65,9 @@ void setup()
 
 void loop() 
 {
+  // save current time
+  unsigned long currentTime = millis();
+  
   // decibel detection
   if (MicInput(micPin) > criticalDecibel)
   {
@@ -112,5 +117,11 @@ void loop()
   delay(delayMsec);
   beatMsec += delayMsec;
 
-  // TODO : timer 
+  // timer here?
+  if (currentTime - timer > 600000)
+  {
+    // TODO : record finish. new record start
+    
+    timer = currentTime;
+  }
 }
