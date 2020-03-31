@@ -9,6 +9,11 @@ unsigned long initialTime = 0;
 const int micPin = 0;
 const int bufferSize = 441;
 
+unsigned long oldMicro = micros();
+byte sampleBuffer[BUFSIZE];
+
+int sampleIndex = 0;
+
 PROGMEM const byte header [44] =
   // This contains the header of a WAV file. Without this, it is not recognized as such.
   // 44 bytes long.
@@ -27,15 +32,6 @@ void WriteHeader()
   {
     myFile.write(pgm_read_byte(&header[pos]));
   }
-}
-
-void Record()
-{
-  byte sample = 0;
-
-  sample = analogRead(micPin);
-
-  myFile.write(sample);
 }
 
 void Finalize()
@@ -92,7 +88,7 @@ void setup()
   // Open serial communications and wait for port to open:
 
   Serial.begin(9600);
-  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(micPin, INPUT);
 
   while (!Serial)
   {
@@ -129,46 +125,34 @@ void setup()
 
 void loop()
 {
-  unsigned long oldMicro = micros();
-  byte sampleBuffer[BUFSIZE];
-
-  int sampleIndex = 0;
-  int rate = 0;
-
-  timer = millis();
-
   if (myFile)
   {
-    while (millis() - timer < 1000)
+    if (micros() - oldMicro > 75) // sample every 75 us => 8kHz
     {
-      if (micros() - oldMicro > 75) // sample every 75 us => 8kHz
-      {
-        oldMicro = micros();
-        sampleBuffer[sampleIndex++] = analogRead(micPin) >> 2;// & 0xfc;  // noise reduce
-        rate++;
-      }
-
-      if (sampleIndex >= BUFSIZE) // buffer full
-      {
-        myFile.write(sampleBuffer, sampleIndex);
-        sampleIndex = 0;
-      }
+      oldMicro = micros();
+      sampleBuffer[sampleIndex++] = analogRead(micPin) >> 2;  // noise reduce
     }
 
-    // update timer
-    timer = millis();
-
-    // write remaining buffer
-    if (sampleIndex > 0)
+    if (sampleIndex >= BUFSIZE) // buffer full
     {
       myFile.write(sampleBuffer, sampleIndex);
+      sampleIndex = 0;
     }
 
     if (millis() - initialTime > 10000) // 10sec record
     {
+      // write remaining buffer
+      if (sampleIndex > 0)
+      {
+        myFile.write(sampleBuffer, sampleIndex);
+        sampleIndex = 0;
+      }
+      
       Finalize();
+      
       Serial.print("Record finished... Record Time : ");
       Serial.println(millis() - initialTime);
+      
       while (1)
       {
         // done
