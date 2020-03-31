@@ -10,6 +10,8 @@ const int micPin = 0;
 const int bufferSize = 441;
 unsigned long avgRate = 0;
 
+byte oldSample = 0;
+
 PROGMEM const byte header [44] =
   // This contains the header of a WAV file. Without this, it is not recognized as such.
   // 44 bytes long.
@@ -34,7 +36,7 @@ void Record()
 {
   byte sample = 0;
 
-  sample = analogRead(micPin) >> 2;
+  sample = analogRead(micPin);
 
   myFile.write(sample);
 }
@@ -93,6 +95,7 @@ void setup()
 
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
+  analogReadResolution(8);
 
   while (!Serial)
   {
@@ -118,7 +121,7 @@ void setup()
   if (myFile)
   {
     WriteHeader();
-    Serial.println("Record start...");
+    Serial.println("Record start... 8bit sampling");
     initialTime = millis();
   }
   else
@@ -129,7 +132,6 @@ void setup()
 
 void loop()
 {
-  unsigned long oldMilli = millis();
   unsigned long oldMicro = micros();
   byte sampleBuffer[BUFSIZE];
 
@@ -145,8 +147,7 @@ void loop()
       if (micros() - oldMicro > 0) // sample every x us
       {
         oldMicro = micros();
-        sampleBuffer[sampleIndex] = analogRead(micPin) >> 2;
-        sampleIndex++;
+        sampleBuffer[sampleIndex++] = analogRead(micPin);// & 0xfc;  // noise reduce
         rate++;
       }
 
@@ -189,7 +190,8 @@ void loop()
     if (millis() - initialTime > 10000) // 10sec record
     {
       Finalize();
-      Serial.println("Record finished...");
+      Serial.print("Record finished... Record Time : ");
+      Serial.println(millis() - initialTime);
       while (1)
       {
         // done
