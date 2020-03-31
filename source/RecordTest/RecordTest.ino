@@ -8,9 +8,6 @@ unsigned long globalTimer = 0;
 unsigned long initialTime = 0;
 const int micPin = 0;
 const int bufferSize = 441;
-unsigned long avgRate = 0;
-
-byte oldSample = 0;
 
 PROGMEM const byte header [44] =
   // This contains the header of a WAV file. Without this, it is not recognized as such.
@@ -18,7 +15,7 @@ PROGMEM const byte header [44] =
 {
   0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45,
   0x66, 0x6D, 0x74, 0x20, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
-  0x00, 0x00, 0x00, 0x00, 0x40, 0x1F, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
+  0x40, 0x1F, 0x00, 0x00, 0x40, 0x1F, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
   0x64, 0x61, 0x74, 0x61, 0x00, 0x00, 0x00, 0x00
 };
 
@@ -76,6 +73,7 @@ void Finalize()
   myFile.seek(40);
   myFile.write(finalValue, 4);
 
+
   // write sample rate
   finalValue[0] = sampleRate & 0xff;
   finalValue[1] = (sampleRate >> 8) & 0xff;
@@ -95,7 +93,6 @@ void setup()
 
   Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
-  analogReadResolution(8);
 
   while (!Serial)
   {
@@ -144,18 +141,15 @@ void loop()
   {
     while (millis() - timer < 1000)
     {
-      if (micros() - oldMicro > 0) // sample every x us
+      if (micros() - oldMicro > 75) // sample every 75 us => 8kHz
       {
         oldMicro = micros();
-        sampleBuffer[sampleIndex++] = analogRead(micPin);// & 0xfc;  // noise reduce
+        sampleBuffer[sampleIndex++] = analogRead(micPin) >> 2;// & 0xfc;  // noise reduce
         rate++;
       }
 
       if (sampleIndex >= BUFSIZE) // buffer full
       {
-        Serial.print("write buffer(buffer full) ");
-        Serial.print(sampleIndex);
-        Serial.println("byte");
         myFile.write(sampleBuffer, sampleIndex);
         sampleIndex = 0;
       }
@@ -167,25 +161,8 @@ void loop()
     // write remaining buffer
     if (sampleIndex > 0)
     {
-      Serial.print("write buffer(remains) ");
-      Serial.print(sampleIndex);
-      Serial.println("byte");
       myFile.write(sampleBuffer, sampleIndex);
     }
-
-    // get average rate
-    if (avgRate > 0)
-    {
-      avgRate = (avgRate + rate) / 2;
-    }
-    else
-    {
-      avgRate = rate;
-    }
-
-    // log rate
-    Serial.print(avgRate);
-    Serial.println(" rate record...");
 
     if (millis() - initialTime > 10000) // 10sec record
     {
