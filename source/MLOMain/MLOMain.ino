@@ -1,15 +1,33 @@
 // 2020. 3. 20 eastroot
 
+#include <SD.h>
+
 // global pin setting
 int micPin = 0;
 int heartbeatPin = 1;
 
-// global variable
+// heartbeat
 const int delayMsec = 60;
 const int criticalBPM = 65;
 const int criticalDecibel = 500;
+bool heartTrigger = true;
 
+// for time
+unsigned long oldMilli = 0;
+unsigned long oldMicro = 0;
 unsigned long timer = 0;
+
+// record
+File record;
+
+// wav header
+PROGMEM const byte header [44] =
+{
+  0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45,
+  0x66, 0x6D, 0x74, 0x20, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
+  0x00, 0x00, 0x00, 0x00, 0x40, 0x1F, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
+  0x64, 0x61, 0x74, 0x61, 0x00, 0x00, 0x00, 0x00
+};
 
 bool HeartbeatDetected(int IRSensorPin, int delayTime)
 {
@@ -54,74 +72,88 @@ int MicInput(int decibelPin)
 
   // TODO : calculate real decibel value from raw value
   result = rawValue;
-  
+
   return result;
 }
 
-void setup() 
+void setup()
 {
   Serial.begin(9600);
+
+  while(!Serial);
+
+  if (!SD.begin(4))
+  {
+    Serial.println("SD Initialize failed!");
+    while(1);
+  }
+  Serial.println("SD Initialize...");
+
+  // initialize timer
+  oldMilli = millis();
+  oldMicro = micros();
 }
 
-void loop() 
+// loop must run at least 8,000/sec
+void loop()
 {
   // save current time
-  unsigned long currentTime = millis();
-  
-  // decibel detection
-  if (MicInput(micPin) > criticalDecibel)
+  unsigned long currentMilli = millis();
+  unsigned long currentMicro = micros();
+
+  // record
+  if (currentMicro - oldMicro > 75)
   {
-    // TODO : send alert to hub 
-    // mark time to recort DB 
+    //Serial.println(currentMicro - oldMicro);
+    oldMicro = currentMicro;
   }
 
-  // TODO : make global timer to control all sensors
-  // I think delay is bad way
-  // delay(100);
-  
+  // decibel detection
+
   // heartbeat detection
   static int beatMsec = 0;
   int heartRateBPM = 0;
   int highBPMCount = 0;
 
-  if (HeartbeatDetected(heartbeatPin, delayMsec))
+  // every delayMSecms
+  if (heartTrigger)
   {
-    if (beatMsec > 0)
+    if (HeartbeatDetected(heartbeatPin, delayMsec))
     {
-      heartRateBPM = 60000 / beatMsec;
-    }
-
-    Serial.print("heartbeat : ");
-    Serial.print(beatMsec);
-    Serial.print(", ");
-    Serial.println(heartRateBPM);
-
-    // TODO : danger branch
-    // send alert to hub when BPM too high
-    if (heartRateBPM > criticalBPM)
-    {
-      highBPMCount++;
-      if (highBPMCount > 5)
+      if (beatMsec > 0)
       {
-        
+        heartRateBPM = 60000 / beatMsec;
       }
+
+      Serial.print("heartbeat : ");
+      Serial.print(beatMsec);
+      Serial.print(", ");
+      Serial.println(heartRateBPM);
+
+      // TODO : danger branch
+      // send alert to hub when BPM too high
+      if (heartRateBPM > criticalBPM)
+      {
+        highBPMCount++;
+        if (highBPMCount > 5)
+        {
+
+        }
+      }
+
+      beatMsec = 0;
     }
+    else
+    {
 
-    beatMsec = 0;
+    }
+    heartTrigger = false;
+    oldMilli = currentMilli;
   }
-  else
-  {
-    
-  }
 
-  delay(delayMsec);
-  beatMsec += delayMsec;
-
-  // timer here?
-  if (currentTime - timer > 600000)
+  if (!heartTrigger && currentMilli - oldMilli > 60)
   {
-    // TODO : record finish. new record start
-    
-    timer = currentTime;
+    oldMilli = currentMilli;
+    heartTrigger = true;
   }
 }
