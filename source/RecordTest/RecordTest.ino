@@ -11,6 +11,7 @@ const int bufferSize = 441;
 
 unsigned long oldMicro = micros();
 byte sampleBuffer[BUFSIZE];
+byte oldSample = 0;
 
 int sampleIndex = 0;
 
@@ -20,7 +21,7 @@ PROGMEM const byte header [44] =
 {
   0x52, 0x49, 0x46, 0x46, 0x00, 0x00, 0x00, 0x00, 0x57, 0x41, 0x56, 0x45,
   0x66, 0x6D, 0x74, 0x20, 0x10, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00,
-  0x40, 0x1F, 0x00, 0x00, 0x40, 0x1F, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
+  0x00, 0x0F, 0x00, 0x00, 0x40, 0x1F, 0x00, 0x00, 0x01, 0x00, 0x10, 0x00,
   0x64, 0x61, 0x74, 0x61, 0x00, 0x00, 0x00, 0x00
 };
 
@@ -44,7 +45,7 @@ void Finalize()
   unsigned long fileSize = myFile.size();
   unsigned long riffSize = fileSize - 8;
   unsigned long dataSize = fileSize - 44;
-  unsigned long sampleRate = dataSize / 10;
+  unsigned long sampleRate = dataSize / 20;  // sample count / sec
 
   Serial.print("sample rate : ");
   Serial.println(sampleRate);
@@ -69,7 +70,6 @@ void Finalize()
   myFile.seek(40);
   myFile.write(finalValue, 4);
 
-
   // write sample rate
   finalValue[0] = sampleRate & 0xff;
   finalValue[1] = (sampleRate >> 8) & 0xff;
@@ -89,6 +89,7 @@ void setup()
 
   Serial.begin(9600);
   pinMode(micPin, INPUT);
+  analogReadResolution(16);
 
   while (!Serial)
   {
@@ -114,7 +115,7 @@ void setup()
   if (myFile)
   {
     WriteHeader();
-    Serial.println("Record start... 8bit sampling");
+    Serial.println("Record start... 16bit sampling");
     initialTime = millis();
   }
   else
@@ -125,29 +126,22 @@ void setup()
 
 void loop()
 {
+  word sample;
+  byte sampleWord[2];
+  
   if (myFile)
   {
     if (micros() - oldMicro > 75) // sample every 75 us => 8kHz
     {
       oldMicro = micros();
-      sampleBuffer[sampleIndex++] = analogRead(micPin) >> 2;  // noise reduce
-    }
-
-    if (sampleIndex >= BUFSIZE) // buffer full
-    {
-      myFile.write(sampleBuffer, sampleIndex);
-      sampleIndex = 0;
+      sample = analogRead(micPin); // noise reduce
+      sampleWord[1] = sample & 0xff;  // lword
+      sampleWord[0] = sample >> 8;    // hword
+      myFile.write(sampleWord, 2);
     }
 
     if (millis() - initialTime > 10000) // 10sec record
-    {
-      // write remaining buffer
-      if (sampleIndex > 0)
-      {
-        myFile.write(sampleBuffer, sampleIndex);
-        sampleIndex = 0;
-      }
-      
+    { 
       Finalize();
       
       Serial.print("Record finished... Record Time : ");
