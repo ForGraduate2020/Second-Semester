@@ -2,9 +2,21 @@
 
 #include <SD.h>
 
+enum AlertType 
+{
+  HEART_BEAT,
+  DECIBEL
+}
+
 // global pin setting
 int micPin = 0;
 int heartbeatPin = 1;
+
+// decibel
+bool decibelTrigger = false;
+byte maxDecibel = 0;
+byte lowDecibel = 256;  // analog read is 8bit
+byte criticalDecibel = 50;
 
 // heartbeat
 const int delayMsec = 60;
@@ -18,7 +30,7 @@ unsigned long oldMicro = 0;
 unsigned long timer = 0;
 
 // record
-File record;
+File recFile;
 
 // wav header
 PROGMEM const byte header [44] =
@@ -28,6 +40,60 @@ PROGMEM const byte header [44] =
   0x00, 0x00, 0x00, 0x00, 0x40, 0x1F, 0x00, 0x00, 0x01, 0x00, 0x08, 0x00,
   0x64, 0x61, 0x74, 0x61, 0x00, 0x00, 0x00, 0x00
 };
+
+void WriteHeader()
+{
+  for (byte pos = 0; pos < sizeof(header); pos++)
+  {
+    recFile.write(pgm_read_byte(&header[pos]));
+  }
+}
+
+void Finalize()
+{
+  // 4  : format chunk size = file size - 8
+  // 24 : sample rate = file size - 44 / record time
+  // 40 : data chunk size = file size - 44
+
+  byte finalValue[4];
+  unsigned long fileSize = myFile.size();
+  unsigned long riffSize = fileSize - 8;
+  unsigned long dataSize = fileSize - 44;
+  unsigned long sampleRate = dataSize / 10;  // sample count / sec
+
+  Serial.print("sample rate : ");
+  Serial.println(sampleRate);
+
+  // write format chunk size
+  finalValue[0] = riffSize & 0xff;
+  finalValue[1] = (riffSize >> 8) & 0xff;
+  finalValue[2] = (riffSize >> 16) & 0xff;
+  finalValue[3] = (riffSize >> 24) & 0xff;
+
+  recFile.seek(4);
+  recFile.write(finalValue, 4);
+
+  // write data chunk size
+  finalValue[0] = dataSize & 0xff;
+  finalValue[1] = (dataSize >> 8) & 0xff;
+  finalValue[2] = (dataSize >> 16) & 0xff;
+  finalValue[3] = (dataSize >> 24) & 0xff;
+
+  recFile.seek(40);
+  recFile.write(finalValue, 4);
+
+  // write sample rate
+  finalValue[0] = sampleRate & 0xff;
+  finalValue[1] = (sampleRate >> 8) & 0xff;
+  finalValue[2] = (sampleRate >> 16) & 0xff;
+  finalValue[3] = (sampleRate >> 24) & 0xff;
+
+  recFile.seek(24);
+  recFile.write(finalValue, 4);
+
+  // close file
+  recFile.close();
+}
 
 bool HeartbeatDetected(int IRSensorPin, int delayTime)
 {
@@ -76,6 +142,28 @@ int MicInput(int decibelPin)
   return result;
 }
 
+void Alert(int type)
+{
+  // mark record file name
+
+  // make alert packet
+  switch(type)
+  {
+    case HEART_BEAT: // heartbeat
+    
+    break;
+    
+    case DECIBEL: // decibel
+    break;
+    
+    default:
+    break;
+  }
+
+  // send alert to hub
+  
+}
+
 void setup()
 {
   Serial.begin(9600);
@@ -88,6 +176,8 @@ void setup()
     while(1);
   }
   Serial.println("SD Initialize...");
+
+  
 
   // initialize timer
   oldMilli = millis();
@@ -104,11 +194,23 @@ void loop()
   // record
   if (currentMicro - oldMicro > 75)
   {
-    //Serial.println(currentMicro - oldMicro);
     oldMicro = currentMicro;
   }
 
   // decibel detection
+  if (decibelTrigger)
+  {
+    byte amp = 0;
+    if (maxDecibel > lowDecibel)
+    {
+      amp = maxDecibel - lowDecibel;
+      if (amp > criticalDecibel)
+      {
+        Alert(DECIBEL);
+      }
+    }
+    decibelTrigger = false;
+  }
 
   // heartbeat detection
   static int beatMsec = 0;
@@ -137,7 +239,7 @@ void loop()
         highBPMCount++;
         if (highBPMCount > 5)
         {
-
+          Alert(HEART_BEAT);
         }
       }
 
@@ -151,9 +253,14 @@ void loop()
     oldMilli = currentMilli;
   }
 
-  if (!heartTrigger && currentMilli - oldMilli > 60)
+  // trigger on every 60ms
+  if (currentMilli - oldMilli > delayMSec)
   {
     oldMilli = currentMilli;
     heartTrigger = true;
+    
+    decibelTrigger = true;
+    maxDecibel = 0;
+    lowDecibel = 256;
   }
 }
