@@ -24,6 +24,8 @@ public:
 	static Communicator* GetInstance();
 	static void ReleaseInstance();
 
+	bool Initialize(const char* Id, const char* Password);
+
 	void Alert(int Type);
 	void SendRecord();
 
