@@ -6,7 +6,7 @@ enum AlertType
 {
   HEART_BEAT,
   DECIBEL
-}
+};
 
 // global pin setting
 int micPin = 0;
@@ -21,7 +21,6 @@ byte criticalDecibel = 50;
 // heartbeat
 const int delayMsec = 60;
 const int criticalBPM = 65;
-const int criticalDecibel = 500;
 bool heartTrigger = true;
 
 // for time
@@ -56,7 +55,7 @@ void Finalize()
   // 40 : data chunk size = file size - 44
 
   byte finalValue[4];
-  unsigned long fileSize = myFile.size();
+  unsigned long fileSize = recFile.size();
   unsigned long riffSize = fileSize - 8;
   unsigned long dataSize = fileSize - 44;
   unsigned long sampleRate = dataSize / 10;  // sample count / sec
@@ -254,7 +253,7 @@ void loop()
   }
 
   // trigger on every 60ms
-  if (currentMilli - oldMilli > delayMSec)
+  if (currentMilli - oldMilli > delayMsec)
   {
     oldMilli = currentMilli;
     heartTrigger = true;
