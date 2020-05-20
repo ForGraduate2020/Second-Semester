@@ -59,14 +59,14 @@ void setup()
   Serial.println("Start Programm...");
 
   // make file first
-  if (!SREC.BeginRecord())
+  /*if (!SREC.BeginRecord())
   {
     Serial.println("can't run program...");
     while(1)
     {
       
     }
-  }
+  }*/
 
   /** Main Loop
 
@@ -112,20 +112,20 @@ void setup()
       /** Record
 
       */
-      SREC.Record(SRECraw);
+      //SREC.Record(SRECraw);
     }
 
     /** Make file
         finalize current file and start new file
     */
-    if (SREC.UpdateMilli(deltaMilli))
+    /*if (SREC.UpdateMilli(deltaMilli))
     {
       SREC.EndRecord();
       if (!SREC.BeginRecord())
       {
         break;
       }
-    }
+    }*/
 
     oldMicro = currentMicro;
     oldMilli = currentMilli;
