@@ -38,7 +38,7 @@ bool SSound::BeginRecord()
   }
 
   recFile = SD.open("rec.wav", O_WRITE | O_READ | O_CREAT);
-  if (recFile == NULL)
+  if (!recFile)
   {
     result = false;
   }
