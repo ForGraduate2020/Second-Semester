@@ -42,6 +42,7 @@ bool Sensor::UpdateMilli(unsigned long Delta)
 	Milli += Delta;
   if (Milli > ActiveMilli)
   {
+    Milli = 0;
     return true;
   }
   else 
@@ -77,6 +78,7 @@ bool Sensor::UpdateMicro(unsigned long Delta)
 	Micro += Delta;
   if (Micro > ActiveMicro)
   {
+    Micro = 0;
     return true;
   }
   else

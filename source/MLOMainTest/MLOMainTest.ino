@@ -1,13 +1,6 @@
 #include "SHeartbeat.h"
 #include "SRecorder.h"
-
-/*#ifndef cbi
-  #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
-  #endif
-  // Defines for setting register bits
-  #ifndef sbi
-  #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
-  #endif*/
+#include "SIMU.h"
 
 #ifndef cbi
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
@@ -16,16 +9,12 @@
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
-// set prescale to 16
-/*sbi(ADCSRA,ADPS2) ;
-  cbi(ADCSRA,ADPS1) ;
-  cbi(ADCSRA,ADPS0) ;*/
-
 #define REC_PIN 1
 #define HB_PIN 2
 
-SSound SREC;
-SHeartbeat SHB;
+SSound SM;
+SHeartbeat SH;
+SIMU SI;
 
 void setup()
 {
@@ -45,10 +34,12 @@ void setup()
   cbi(ADCSRA, ADPS0) ;
 
   // initialize sensors
-  SHB.PlayMilli(2, 60, 80);   // 60 milli seconds
+  SH.PlayMilli(2, 60000, 80);   // 60 milli seconds
 
-  SREC.PlayMicro(1, 125, 500);    // 125 micro second
-  SREC.PlayMilli(1, 600000, 80);  // 10 min
+  SM.PlayMicro(1, 125000, 500);    // 125 micro second
+
+  SI.Initialize();
+  SI.PlayMilli(0, 100, 80);
 
   unsigned long currentMilli = 0;
   unsigned long oldMilli = millis();
@@ -57,26 +48,6 @@ void setup()
   unsigned long oldMicro = micros();
 
   Serial.println("Start Programm...");
-
-  // SD Initialize
-  if (!SREC.Initialize())
-  {
-    Serial.println("can't begin SD");
-    while(1)
-    {
-      
-    }
-  }
-  
-  // make file first
-  if (!SREC.BeginRecord())
-  {
-    Serial.println("can't run program...");
-    while(1)
-    {
-      
-    }
-  }
 
   /** Main Loop
 
@@ -92,48 +63,58 @@ void setup()
     /** Heartbeat
 
     */
-    if (SHB.UpdateMilli(deltaMilli))
+    if (SH.UpdateMilli(deltaMilli))
     {
-      int SHBraw = analogRead(HB_PIN);
-      Serial.println(SHB.getMilli());
-      if (SHB.Active(SHBraw))
+      int raw = analogRead(HB_PIN);
+      
+      if (SH.Active(raw))
       {
-        int bpm = SHB.getBPM();
+        int bpm = SH.getBPM();
         Serial.print(bpm);
         Serial.println(" bpm");
       }
     }
 
-    /** Record & Decibel
+    /** Decibel
 
     */
-    if (SREC.UpdateMicro(deltaMicro))
+    if (SM.UpdateMicro(deltaMicro))
     {
-      int SRECraw = analogRead(REC_PIN);
+      int raw = analogRead(REC_PIN);
 
-      /** Decibel
-
-      */
-      if (SREC.Sample(SRECraw))
+      if (SM.Sample(raw))
       {
         Serial.println("-----high-----");
       }
-
-      /** Record
-
-      */
-      SREC.Record(SRECraw);
     }
 
-    /** Make file
-        finalize current file and start new file
-    */
-    if (SREC.UpdateMilli(deltaMilli))
+    /** IMU
+     *  
+     */
+    if (SI.UpdateMilli(deltaMilli))
     {
-      SREC.EndRecord();
-      if (!SREC.BeginRecord())
+      // get raw value
+      if (SI.Active())
       {
-        break;
+        Serial.println("fall down");
+        
+        /*float ax, ay, az;
+        float gx, gy;
+        float acc, gyro;
+
+        SI.GetAccel(&ax, &ay, &az);
+        SI.GetGyro(&gx, &gy);
+
+
+        acc = sqrt(ax*ax + ay*ay + az*az);
+        gyro = sqrt(gx*gx + gy*gy);
+        //acc = SI.GetAccel();
+        //gyro = SI.GetGyro();
+
+        if (acc > 2.0 && gyro > 200)
+        {
+          Serial.println("fall");
+        }*/
       }
     }
 
@@ -146,9 +127,4 @@ void setup()
   {
     
   }
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-
 }
