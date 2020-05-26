@@ -16,12 +16,25 @@ SHeartbeat::~SHeartbeat()
 
 }
 
+bool SHeartbeat::UpdateMilli(unsigned long Delta)
+{
+  Milli += Delta;
+  if (Milli > ActiveMilli)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 bool SHeartbeat::Active(int rawValue)
 {
   bool result = false;
 
   rawValue *= (1000 / Milli);
-  
+
   if (rawValue * 4L < maxValue)
   {
     maxValue = rawValue * 0.8;
@@ -46,7 +59,7 @@ bool SHeartbeat::Active(int rawValue)
 
   beatMsec += Milli;
   Milli = 0;
-  
+
   return result;
 }
 

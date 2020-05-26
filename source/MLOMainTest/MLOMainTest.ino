@@ -34,9 +34,10 @@ void setup()
   cbi(ADCSRA, ADPS0) ;
 
   // initialize sensors
-  SH.PlayMilli(2, 60000, 80);   // 60 milli seconds
+  SH.PlayMilli(2, 60, 80);   // 60 milli seconds
 
   SM.PlayMicro(1, 125000, 500);    // 125 micro second
+  SM.PlayMilli(1, 1000, 500);  // 100 milli to decrease
 
   SI.Initialize();
   SI.PlayMilli(0, 100, 80);
@@ -67,12 +68,12 @@ void setup()
     {
       int raw = analogRead(HB_PIN);
       
-      if (SH.Active(raw))
+      /*if (SH.Active(raw))
       {
         int bpm = SH.getBPM();
         Serial.print(bpm);
         Serial.println(" bpm");
-      }
+      }*/
     }
 
     /** Decibel
@@ -80,12 +81,26 @@ void setup()
     */
     if (SM.UpdateMicro(deltaMicro))
     {
-      int raw = analogRead(REC_PIN);
-
+      int raw = analogRead(REC_PIN) >> 2;
       if (SM.Sample(raw))
       {
-        Serial.println("-----high-----");
+        Serial.println("sample high");
       }
+    }
+
+    if (SM.UpdateMilli(deltaMilli)) // true if 0.1sec from last high value
+    {
+      SM.IncreaseCount();
+      if (SM.Critical())  // critical count > 5
+      {
+        // alarm
+      }
+      Serial.println("----high----");
+    }
+
+    if (SM.UpdateMilli2(deltaMilli))  // 3sec
+    {
+      SM.DecreaseCount(); // if critical count > 0
     }
 
     /** IMU
@@ -94,28 +109,10 @@ void setup()
     if (SI.UpdateMilli(deltaMilli))
     {
       // get raw value
-      if (SI.Active())
+      /*if (SI.Active())
       {
         Serial.println("fall down");
-        
-        /*float ax, ay, az;
-        float gx, gy;
-        float acc, gyro;
-
-        SI.GetAccel(&ax, &ay, &az);
-        SI.GetGyro(&gx, &gy);
-
-
-        acc = sqrt(ax*ax + ay*ay + az*az);
-        gyro = sqrt(gx*gx + gy*gy);
-        //acc = SI.GetAccel();
-        //gyro = SI.GetGyro();
-
-        if (acc > 2.0 && gyro > 200)
-        {
-          Serial.println("fall");
-        }*/
-      }
+      }*/
     }
 
     oldMicro = currentMicro;

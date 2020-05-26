@@ -12,6 +12,10 @@ SSound::SSound()
   SampleMin = 5000;
 
   ActiveMicro = 125;	// default 1/8000sec for 8kHz
+
+  oldRaw = 0;
+
+  High = false;
 }
 
 SSound::~SSound()
@@ -19,95 +23,26 @@ SSound::~SSound()
 
 }
 
-bool SSound::Initialize()
+bool SSound::UpdateMilli(unsigned long Delta)
 {
-  bool result = true;
-
-  result = SD.begin(4);
-
-  return result;
-}
-
-bool SSound::BeginRecord()
-{
-  bool result = true;
-  
-  if (SD.exists("rec.wav"))
+  if (!High)
   {
-    SD.remove("rec.wav");
-  }
-
-  recFile = SD.open("rec.wav", O_WRITE | O_READ | O_CREAT);
-  if (!recFile)
-  {
-    result = false;
+    return false;
   }
   
-  for (byte pos = 0; pos < sizeof(header); pos++)
+  Milli += Delta;
+  if (Milli > ActiveMilli)
   {
-    recFile.write(pgm_read_byte(&header[pos]));
+    Milli = 0;
+    High = false;
+    if (HighCount > 6)
+      return true;
+    else
+      return false;
   }
-
-  return result;
-}
-
-void SSound::Record(int rawValue)
-{
-  recFile.write(rawValue);
-}
-
-void SSound::EndRecord()
-{
-  // 4  : format chunk size = file size - 8
-  // 24 : sample rate = file size - 44 / record time
-  // 40 : data chunk size = file size - 44
-
-  byte finalValue[4];
-  unsigned long fileSize = recFile.size();
-  unsigned long riffSize = fileSize - 8;
-  unsigned long dataSize = fileSize - 44;
-  unsigned long sampleRate = dataSize / 20;  // sample count / sec
-
-  Serial.print("sample rate : ");
-  Serial.println(sampleRate);
-
-  // write format chunk size
-  finalValue[0] = riffSize & 0xff;
-  finalValue[1] = (riffSize >> 8) & 0xff;
-  finalValue[2] = (riffSize >> 16) & 0xff;
-  finalValue[3] = (riffSize >> 24) & 0xff;
-  // Is possible to make a fuction that returns an array of bytes?
-
-  recFile.seek(4);
-  recFile.write(finalValue, 4);
-
-  // write data chunk size
-  finalValue[0] = dataSize & 0xff;
-  finalValue[1] = (dataSize >> 8) & 0xff;
-  finalValue[2] = (dataSize >> 16) & 0xff;
-  finalValue[3] = (dataSize >> 24) & 0xff;
-  // Is possible to make a fuction that returns an array of bytes?
-
-  recFile.seek(40);
-  recFile.write(finalValue, 4);
-
-  // write sample rate
-  finalValue[0] = sampleRate & 0xff;
-  finalValue[1] = (sampleRate >> 8) & 0xff;
-  finalValue[2] = (sampleRate >> 16) & 0xff;
-  finalValue[3] = (sampleRate >> 24) & 0xff;
-
-  recFile.seek(24);
-  recFile.write(finalValue, 4);
-
-  // Check if already in little-endian order
-  recFile.close();
-
-  // send if it is danger file
-  if (IsDanger)
+  else
   {
-    // Communicator::GetInstance()->SendFile();
-    IsDanger = false;
+    return false;
   }
 }
 
@@ -128,11 +63,14 @@ bool SSound::Sample(int rawValue)
 
   PeakToPeak = SampleMax - SampleMin;
 
-  if (PeakToPeak > 500)
+  if (PeakToPeak > 100)
   {
     SampleMax = 0;
     SampleMin = 5000;
     result = true;
+    High = true;
+    Milli = 0;
+    HighCount++;
   }
 
   return result;

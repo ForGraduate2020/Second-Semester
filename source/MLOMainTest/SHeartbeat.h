@@ -15,6 +15,8 @@ public:
 	SHeartbeat();
 	~SHeartbeat();
 
+
+  virtual bool UpdateMilli(unsigned long Delta);
   int getMilli() { return Milli; };
 	virtual bool Active(int rawValue);
 
