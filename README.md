@@ -13,7 +13,7 @@ Main : **My Little Observer**
 ​    
   
 * [\[1\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/유스케이스.docx)
-* [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/testcase.xlsx)
+* [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/.xlsx)
 * [\[3\] GUI](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B7%B8%EB%9E%98%ED%94%BD/GUI.docx)
 * [\[4\] HW사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C/%EC%9E%AC%EB%A3%8C%20%EA%B5%AC%EB%A7%A4%EC%9A%94%EA%B5%AC%EC%84%9C(1)%EC%B5%9C%EC%A2%85.xls)
 * [\[5\] 기타(데이터베이스, 구매요구서 등)](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
