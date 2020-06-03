@@ -35,10 +35,7 @@ bool SSound::UpdateMilli(unsigned long Delta)
   {
     Milli = 0;
     High = false;
-    if (HighCount > 6)
-      return true;
-    else
-      return false;
+    return true;
   }
   else
   {
@@ -70,7 +67,6 @@ bool SSound::Sample(int rawValue)
     result = true;
     High = true;
     Milli = 0;
-    HighCount++;
   }
 
   return result;
