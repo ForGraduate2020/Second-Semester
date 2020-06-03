@@ -47,7 +47,20 @@ bool SHeartbeat::Active(int rawValue)
     }
     if (isPeak == false)
     {
-      result = true;
+      int bpm = 60000 / beatMsec;
+      beatMsec = 0;
+
+      if (bpm > 80 || bpm < 120)
+      {
+        Danger++;
+        if (Danger > CriticalDanger)
+        {
+          result = true;
+          Danger = 0;
+        }
+      }
+      
+      //result = true;
     }
     isPeak = true;
   }

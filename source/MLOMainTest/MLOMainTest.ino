@@ -137,7 +137,7 @@ void setup()
   cbi(ADCSRA, ADPS0) ;
 
   // initialize sensors
-  SH.PlayMilli(2, 60, 80);   // 60 milli seconds
+  SH.PlayMilli(2, 60, 10);   // 60 milli seconds
 
   SM.PlayMicro(1, 125000, 500);    // 125 micro second
   SM.PlayMilli(1, 1000, 500);  // 100 milli to decrease
@@ -170,12 +170,10 @@ void setup()
     {
       int raw = analogRead(HB_PIN);
 
-      /*if (SH.Active(raw))
-        {
-        int bpm = SH.getBPM();
-        Serial.print(bpm);
-        Serial.println(" bpm");
-        }*/
+      if (SH.Active(raw))
+      {
+        Jsonparse(HEART_ALARM);
+      }
     }
 
     /** Decibel
@@ -183,10 +181,7 @@ void setup()
     if (SM.UpdateMicro(deltaMicro))
     {
       int raw = analogRead(REC_PIN) >> 2;
-      if (SM.Sample(raw))
-      {
-        Serial.println("sample high");
-      }
+      SM.Sample(raw);
     }
 
     if (SM.UpdateMilli(deltaMilli)) // true if 0.1sec from last high value
