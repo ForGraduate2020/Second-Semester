@@ -21,8 +21,8 @@ public:
     virtual bool Active();
     void GetAccel(float* x, float* y, float* z);
     void GetGyro(float* x, float* y);
-    float GetAccel() { return OldAccel; };
-    float GetGyro() { return OldGyro; };
+    float GetAccel() { return CurrentAccel; };
+    float GetGyro() { return CurrentGyro; };
     
 private:
     bool IsDanger;
@@ -34,7 +34,7 @@ private:
     float Ax, Ay, Az;
     float Gx, Gy;
     
-    float OldAccel;
-    float OldGyro;
+    float CurrentAccel;
+    float CurrentGyro;
     
 };

@@ -69,9 +69,6 @@ bool SIMU::Active()
     Gx = (float) GxRaw * 250 / 32768;
     Gy = (float) GyRaw * 250 / 32768;
     
-    float CurrentAccel;
-    float CurrentGyro;
-    
     CurrentAccel = sqrt(Ax*Ax + Ay*Ay + Az*Az);
     CurrentGyro = sqrt(Gx*Gx * Gy*Gy);
 

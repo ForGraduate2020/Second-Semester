@@ -121,8 +121,8 @@ void Jsonparse(int alarmType) {
 void setup()
 {
   Serial.begin(9600);
-  Wifiesp.begin(9600); //9600
-  while (!WiFiconnect());
+  //Wifiesp.begin(9600); //9600
+  //while (!WiFiconnect());
   // disable digital input register
   sbi(DIDR0, ADC0D);
   sbi(DIDR0, ADC1D);
@@ -172,7 +172,7 @@ void setup()
 
       if (SH.Active(raw))
       {
-        Jsonparse(HEART_ALARM);
+        //Jsonparse(HEART_ALARM);
       }
     }
 
@@ -187,7 +187,7 @@ void setup()
     if (SM.UpdateMilli(deltaMilli)) // true if 0.1sec from last high value
     {
       //Serial.println("----high----");
-      Jsonparse(DECIBEL_ALARM);
+      //Jsonparse(DECIBEL_ALARM);
     }
 
 
@@ -196,11 +196,13 @@ void setup()
     */
     if (SI.UpdateMilli(deltaMilli))
     {
+      Serial.println(SI.GetAccel());
+      Serial.println(SI.GetGyro());
       // get raw value
       if (SI.Active())
       {
         //Serial.println("fall down");
-        Jsonparse(TUMBLE_ALARM);
+        //Jsonparse(TUMBLE_ALARM);
       }
     }
 
