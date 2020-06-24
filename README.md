@@ -1,41 +1,32 @@
-# Second-Semester
-
-19년도 2학기 캡스톤 디자인1 수업 작업 공간입니다. 
-  
+# 캡스톤 디자인
   
 ## MainIdea
 Main : **My Little Observer**
-  
-  
-## 최종결과물
-<details>
-<summary>최종결과물</summary>
-​    
+
+## 캡스톤 디자인 2
+### 최종결과물
+* [\[1\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/유스케이스.docx)
+* [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/테스트케이스.xlsx)
+
+
+
+
+## 캡스톤 디자인 1   
+### 최종결과물
   
 * [\[1\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/유스케이스.docx)
 * [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/테스트케이스.xlsx)
 * [\[3\] GUI](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B7%B8%EB%9E%98%ED%94%BD/GUI.docx)
 * [\[4\] HW사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C/%EC%9E%AC%EB%A3%8C%20%EA%B5%AC%EB%A7%A4%EC%9A%94%EA%B5%AC%EC%84%9C(1)%EC%B5%9C%EC%A2%85.xls)
 * [\[5\] 기타(데이터베이스, 구매요구서 등)](https://github.com/ForGraduate2020/Second-Semester/tree/master/%EA%B8%B0%ED%83%80%EB%AC%B8%EC%84%9C)
-</details>
 
-
-<details>
-<summary>최종문서[과사 제출용]</summary>
-​    
+### 최종문서 
   
 * [\[1\] 기획문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C.docx)
 * [\[2\] 최종문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EC%B5%9C%EC%A2%85%EB%AC%B8%EC%84%9C%20(1).docx)
-</deatils>
-
-  
-  
   
   
 #### 발표자료
-<details>
-<summary>발표자료</summary>
-​    
   
 * [\[190911\]브레인스토밍](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B190911%5D브레인스토밍.pptx)
 * [\[190918\]아이디어 취합](https://github.com/ForGraduate2020/Second-Semester/raw/master/발표자료/%5B190918%5D아이디어%20취합.pptx)
@@ -46,7 +37,4 @@ Main : **My Little Observer**
 * [\[191113\]아이디어 확정](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191113%5D아이디어%20확정.pptx)
 * [\[191120\]하드웨어 요구사항](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191120%5D하드웨어_요구사항.pptx)
 * [\[191127\]GUI&Usecase](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191127%5DGUI_Usecase.pptx)
- * [\191203\]설계 사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191204%5D설계%20사양.pptx)
-
-</details>
-
+* [\191203\]설계 사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191204%5D설계%20사양.pptx)
