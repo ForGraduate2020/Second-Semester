@@ -1,16 +1,21 @@
 # 캡스톤 디자인
   
-## MainIdea
-Main : **My Little Observer**
+![image](https://user-images.githubusercontent.com/48986787/85488906-15ce6f00-b60a-11ea-8772-16da2306b09a.png)
+
+
 
 ## 캡스톤 디자인 2
 ### 최종결과물
-* [\[1\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/유스케이스.docx)
-* [\[2\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/테스트케이스.xlsx)
+* [\[1\] 시나리오](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.docx)
+* [\[2\] Use Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/유스케이스.docx)
+* [\[3\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/테스트케이스.xlsx)
+  
+### 최종문서
+* [\[1\] 최조운서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/4%EB%A7%88%EB%A6%AC%EC%98%B5(%EB%B0%95%EB%AC%B8%EC%A3%BC%EA%B5%90%EC%88%98%EB%8B%98)-%EA%B3%B5%ED%86%B5%EB%AC%B8%EC%84%9C(2).hwp)
 
 
-
-
+ -------- 
+  
 ## 캡스톤 디자인 1   
 ### 최종결과물
   
@@ -23,7 +28,7 @@ Main : **My Little Observer**
 ### 최종문서 
   
 * [\[1\] 기획문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C.docx)
-* [\[2\] 최종문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%EC%B5%9C%EC%A2%85%EB%AC%B8%EC%84%9C%20(1).docx)
+* [\[2\] 최종문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EC%8B%A4%EB%AC%B4(1)%20%EA%B3%B5%ED%86%B5%EB%AC%B8%EC%84%9C%20%5B4%EB%A7%88%EB%A6%AC%EC%98%B5%20-%20%EB%B0%95%EB%AC%B8%EC%A3%BC%20%EA%B5%90%EC%88%98%EB%8B%98%5D.docx)
   
   
 #### 발표자료
