@@ -11,7 +11,7 @@
 * [\[3\] Test Case](https://github.com/ForGraduate2020/Second-Semester/blob/master/기획문서/테스트케이스.xlsx)
   
 ### 최종문서
-* [\[1\] 최조운서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/4%EB%A7%88%EB%A6%AC%EC%98%B5(%EB%B0%95%EB%AC%B8%EC%A3%BC%EA%B5%90%EC%88%98%EB%8B%98)-%EA%B3%B5%ED%86%B5%EB%AC%B8%EC%84%9C(2).hwp)
+* [\[1\] 최종문서](https://github.com/ForGraduate2020/Second-Semester/blob/master/%EA%B8%B0%ED%9A%8D%EB%AC%B8%EC%84%9C/4%EB%A7%88%EB%A6%AC%EC%98%B5(%EB%B0%95%EB%AC%B8%EC%A3%BC%EA%B5%90%EC%88%98%EB%8B%98)-%EA%B3%B5%ED%86%B5%EB%AC%B8%EC%84%9C(2).hwp)
 
 
  -------- 
@@ -42,4 +42,4 @@
 * [\[191113\]아이디어 확정](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191113%5D아이디어%20확정.pptx)
 * [\[191120\]하드웨어 요구사항](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191120%5D하드웨어_요구사항.pptx)
 * [\[191127\]GUI&Usecase](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191127%5DGUI_Usecase.pptx)
-* [\191203\]설계 사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191204%5D설계%20사양.pptx)
+* [\[191203\]설계 사양](https://github.com/ForGraduate2020/Second-Semester/blob/master/발표자료/%5B191204%5D설계%20사양.pptx)
